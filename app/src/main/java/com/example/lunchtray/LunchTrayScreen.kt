@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -86,15 +85,18 @@ fun LunchTrayAppBar(
 }
 
 @Composable
-fun LunchTrayApp(
-    viewModel: OrderViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
-) {
-    // Create Controller and initialization
+fun LunchTrayApp() {
+    //Create NavController
+    val navController = rememberNavController()
+    // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
+    // Get the name of the current screen
     val currentScreen = LunchTrayScreen.valueOf(
         backStackEntry?.destination?.route ?: LunchTrayScreen.Start.name
     )
+    // Create ViewModel
+    val viewModel: OrderViewModel = viewModel()
+
 
     Scaffold(
         topBar = {
